@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2016/07/15 11:58:10.000.175,=C:\Users\ray\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2016/07/15 11:58:28.000.594,C:\Users\ray\Documents\Embarcadero\Studio\Projects\Project1.dproj=C:\Users\ray\Documents\Embarcadero\Studio\Projects\transactions.dproj</Transaction>
+    <Transaction>2016/07/15 12:15:50.000.154,C:\Users\ray\Documents\Embarcadero\Studio\Projects\Unit1.dfm=C:\Users\ray\Documents\Embarcadero\Studio\Projects\transactions\Unit1.dfm</Transaction>
+    <Transaction>2016/07/15 12:15:50.000.154,C:\Users\ray\Documents\Embarcadero\Studio\Projects\Unit1.pas=C:\Users\ray\Documents\Embarcadero\Studio\Projects\transactions\Unit1.pas</Transaction>
+    <Transaction>2016/07/15 12:15:52.000.485,C:\Users\ray\Documents\Embarcadero\Studio\Projects\transactions.dproj=C:\Users\ray\Documents\Embarcadero\Studio\Projects\transactions\transactions.dproj</Transaction>
+    <Transaction>2016/07/18 10:50:19.000.606,=C:\Users\ray\Documents\Embarcadero\Studio\Projects\transactions\Unit2.pas</Transaction>
+    <Transaction>2016/07/21 13:18:48.556,=C:\Users\Public\Documents\Embarcadero\Studio\17.0\Samples\Object Pascal\VCL\SplitView\uSplitView.pas</Transaction>
+    <Transaction>2016/07/21 14:26:13.105,C:\Users\Public\Documents\Embarcadero\Studio\17.0\Samples\Object Pascal\VCL\SplitView\uSplitView.pas=</Transaction>
+    <Transaction>2016/07/21 14:26:18.937,C:\Users\ray\Documents\Embarcadero\Studio\Projects\transactions\Unit2.pas=</Transaction>
+    <Transaction>2016/07/21 14:30:28.261,=C:\Users\ray\Documents\Embarcadero\Studio\Projects\transactions\uSplitView.pas</Transaction>
+    <Transaction>2016/07/21 14:30:43.022,C:\Users\ray\Documents\Embarcadero\Studio\Projects\transactions\uSplitView.pas=</Transaction>
+    <Transaction>2016/07/21 14:31:56.319,=C:\Users\ray\Documents\Embarcadero\Studio\Projects\transactions\uSplitView.pas</Transaction>
+    <Transaction>2016/07/21 14:32:46.861,C:\Users\ray\Documents\Embarcadero\Studio\Projects\transactions\frmEmployees.pas=C:\Users\ray\Documents\Embarcadero\Studio\Projects\transactions\Unit1.pas</Transaction>
+    <Transaction>2016/07/21 14:32:46.861,C:\Users\ray\Documents\Embarcadero\Studio\Projects\transactions\frmEmployees.dfm=C:\Users\ray\Documents\Embarcadero\Studio\Projects\transactions\Unit1.dfm</Transaction>
+    <Transaction>2016/07/21 14:32:56.454,C:\Users\ray\Documents\Embarcadero\Studio\Projects\transactions\frmSplitView.dfm=C:\Users\ray\Documents\Embarcadero\Studio\Projects\transactions\uSplitView.dfm</Transaction>
+    <Transaction>2016/07/21 14:32:56.454,C:\Users\ray\Documents\Embarcadero\Studio\Projects\transactions\frmSplitView.pas=C:\Users\ray\Documents\Embarcadero\Studio\Projects\transactions\uSplitView.pas</Transaction>
+  </Transactions>
+</BorlandProject>

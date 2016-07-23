@@ -1,0 +1,266 @@
+//---------------------------------------------------------------------------
+
+// This software is Copyright (c) 2015 Embarcadero Technologies, Inc.
+// You may only use this software if you are an authorized licensee
+// of an Embarcadero developer tools product.
+// This software is considered a Redistributable as defined under
+// the software license agreement that comes with the Embarcadero Products
+// and is subject to that software license agreement.
+
+//---------------------------------------------------------------------------
+
+unit frmSplitView;
+
+interface
+
+uses
+  Winapi.Windows,
+  Winapi.Messages,
+  System.SysUtils,
+  System.Variants,
+  System.Classes,
+  System.ImageList,
+  System.Actions,
+  Vcl.Graphics,
+  Vcl.Controls,
+  Vcl.Forms,
+  Vcl.Dialogs,
+  Vcl.ExtCtrls,
+  Vcl.WinXCtrls,
+  Vcl.StdCtrls,
+  Vcl.CategoryButtons,
+  Vcl.Buttons,
+  Vcl.ImgList,
+  Vcl.Imaging.PngImage,
+  Vcl.ComCtrls,
+  Vcl.ActnList, Data.DB, Vcl.Grids, Vcl.DBGrids, Data.Win.ADODB;
+
+type
+  TSplitViewForm = class(TForm)
+    pnlToolbar: TPanel;
+    chkUseAnimation: TCheckBox;
+    SV: TSplitView;
+    catMenuItems: TCategoryButtons;
+    imlIcons: TImageList;
+    imgMenu: TImage;
+    cbxVclStyles: TComboBox;
+    grpAnimation: TGroupBox;
+    lblAnimationDelay: TLabel;
+    lblAnimationStep: TLabel;
+    trkAnimationDelay: TTrackBar;
+    trkAnimationStep: TTrackBar;
+    ActionList1: TActionList;
+    actHome: TAction;
+    actLayout: TAction;
+    actPower: TAction;
+    actDoSomething: TAction;
+    lblTitle: TLabel;
+    lblVclStyle: TLabel;
+    Splitter1: TSplitter;
+    PageControl: TPageControl;
+    TabHome: TTabSheet;
+    TabEmployees: TTabSheet;
+    TabSettings: TTabSheet;
+    Label1: TLabel;
+    Panel1: TPanel;
+    TabSearch: TTabSheet;
+    stProcSalesCountry: TADOStoredProc;
+    DBGrid1: TDBGrid;
+    dsStoredProcedures: TDataSource;
+    BtnSearch: TButton;
+    EditEndDate: TEdit;
+    EditBeginDate: TEdit;
+    Panel2: TPanel;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label2: TLabel;
+    Label5: TLabel;
+    function ConvertDate(UsDate : String) : String;
+    procedure FormCreate(Sender: TObject);
+    procedure SVClosed(Sender: TObject);
+    procedure SVClosing(Sender: TObject);
+    procedure SVOpened(Sender: TObject);
+    procedure SVOpening(Sender: TObject);
+    procedure catMenuItemsCategoryCollapase(Sender: TObject; const Category: TButtonCategory);
+    procedure imgMenuClick(Sender: TObject);
+    procedure chkUseAnimationClick(Sender: TObject);
+    procedure trkAnimationDelayChange(Sender: TObject);
+    procedure trkAnimationStepChange(Sender: TObject);
+    procedure actHomeExecute(Sender: TObject);
+    procedure actEmployeesExecute(Sender: TObject);
+    procedure actSettingsExecute(Sender: TObject);
+    procedure actSearchExecute(Sender: TObject);
+    procedure cbxVclStylesChange(Sender: TObject);
+    procedure BtnSearchClick(Sender: TObject);
+  private
+  public
+  end;
+
+var
+  SplitViewForm: TSplitViewForm;
+
+implementation
+
+uses
+  Vcl.Themes,frmEmployees;
+
+{$R *.dfm}
+
+procedure TSplitViewForm.FormCreate(Sender: TObject);
+var
+  StyleName: string;
+begin
+  for StyleName in TStyleManager.StyleNames do
+    cbxVclStyles.Items.Add(StyleName);
+
+  cbxVclStyles.ItemIndex := cbxVclStyles.Items.IndexOf(TStyleManager.ActiveStyle.Name);
+  SV.CloseStyle := TSplitViewCloseStyle(1);
+  SV.UseAnimation := true;
+
+  fmEmployees := TfmEmployees.Create(application);
+  fmEmployees.Parent := TabEmployees;
+  fmEmployees.Align := alClient;
+
+  {TabHome.TabVisible := false;
+  TabSettings.TabVisible := false;
+  tabEmployees.TabVisible := false;
+  TabSearch.TabVisible := false; }
+  Panel2.Color := StringToColor('$00BE6414');
+end;
+
+procedure TSplitViewForm.cbxVclStylesChange(Sender: TObject);
+begin
+  TStyleManager.SetStyle(cbxVclStyles.Text);
+end;
+
+procedure TSplitViewForm.imgMenuClick(Sender: TObject);
+begin
+  if SV.Opened then
+    SV.Close
+  else
+    SV.Open;
+end;
+
+
+
+procedure TSplitViewForm.SVClosed(Sender: TObject);
+begin
+  // When TSplitView is closed, adjust ButtonOptions and Width
+  catMenuItems.ButtonOptions := catMenuItems.ButtonOptions - [boShowCaptions];
+  if SV.CloseStyle = svcCompact then
+    catMenuItems.Width := SV.CompactWidth;
+end;
+
+procedure TSplitViewForm.SVClosing(Sender: TObject);
+begin
+//
+end;
+
+procedure TSplitViewForm.SVOpened(Sender: TObject);
+begin
+  // When not animating, change size of catMenuItems when TSplitView is opened
+  catMenuItems.ButtonOptions := catMenuItems.ButtonOptions + [boShowCaptions];
+  catMenuItems.Width := SV.OpenedWidth;
+end;
+
+procedure TSplitViewForm.SVOpening(Sender: TObject);
+begin
+  // When animating, change size of catMenuItems at the beginning of open
+  catMenuItems.ButtonOptions := catMenuItems.ButtonOptions + [boShowCaptions];
+  catMenuItems.Width := SV.OpenedWidth;
+end;
+
+procedure TSplitViewForm.chkUseAnimationClick(Sender: TObject);
+begin
+  SV.UseAnimation := chkUseAnimation.Checked;
+  lblAnimationDelay.Enabled := SV.UseAnimation;
+  trkAnimationDelay.Enabled := SV.UseAnimation;
+  lblAnimationStep.Enabled := SV.UseAnimation;
+  trkAnimationStep.Enabled := SV.UseAnimation;
+end;
+
+procedure TSplitViewForm.trkAnimationDelayChange(Sender: TObject);
+begin
+  SV.AnimationDelay := trkAnimationDelay.Position * 5;
+  lblAnimationDelay.Caption := 'Animation Delay (' + IntToStr(SV.AnimationDelay) + ')';
+end;
+
+procedure TSplitViewForm.trkAnimationStepChange(Sender: TObject);
+begin
+  SV.AnimationStep := trkAnimationStep.Position * 5;
+  lblAnimationStep.Caption := 'Animation Step (' + IntToStr(SV.AnimationStep) + ')';
+end;
+
+
+procedure TSplitViewForm.catMenuItemsCategoryCollapase(Sender: TObject; const Category: TButtonCategory);
+begin
+  // Prevent the catMenuItems Category group from being collapsed
+  catMenuItems.Categories[0].Collapsed := False;
+end;
+procedure TSplitViewForm.actHomeExecute(Sender: TObject);
+begin
+
+  //if SV.Opened  then
+    //SV.Close;
+  PageControl.ActivePage := TabHome;
+end;
+
+procedure TSplitViewForm.actEmployeesExecute(Sender: TObject);
+begin
+  //if SV.Opened  then
+    //SV.Close;
+  PageControl.ActivePage := TabEmployees;
+
+end;
+
+procedure TSplitViewForm.actSearchExecute(Sender: TObject);
+begin
+  //if SV.Opened then
+    //SV.Close;
+end;
+procedure TSplitViewForm.actSettingsExecute(Sender: TObject);
+begin
+    //if SV.Opened then
+    //SV.Close;
+    PageControl.ActivePage := TabSettings;
+end;
+
+procedure TSplitViewForm.BtnSearchClick(Sender: TObject);
+var fbegindate,fenddate : string;
+begin
+
+  stProcSalesCountry.Parameters.Refresh;
+  if stProcSalesCountry.Active then
+    stProcSalesCountry.Close;
+
+  fBeginDate := ConvertDate(EditBeginDate.Text);
+  fEndDate := ConvertDate(EditEndDate.Text);
+
+  try
+    stProcSalesCountry.Parameters.ParamByName('@Beginning_Date').Value := fBeginDate;
+    stProcSalesCountry.Parameters.ParamByName('@Ending_Date').Value := fEndDate;
+  finally
+    stProcSalesCountry.Prepared := true;
+    stProcSalesCountry.Active := true;
+  end;
+end;
+function TSplitViewForm.ConvertDate(UsDate: String): String;
+var fYear,fMonth,fDay,fEuDate : string;
+    fDashPos : integer;
+begin
+  fDashPos := Pos('-',UsDate);
+  fMonth := Copy(UsDate,1,fDashPos-1);     //mm
+  delete(UsDate,1,fDashPos);
+
+  fDashPos := Pos('-',UsDate);
+  fDay := Copy(UsDate,1,fDashPos -1);      //dd
+  delete(UsDate,1,fDashPos);
+
+  fYear := UsDate;                         //yyyy
+  fEuDate := fYear +'-'+fMonth+'-'+fDay;   //yyyy-mm-dd
+
+  result := fEuDate;
+end;
+
+
+end.

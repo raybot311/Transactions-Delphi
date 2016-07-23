@@ -1,0 +1,60 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{E30F2132-0F6D-4ED1-B92A-B0C9B15F9B21}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="transactions.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\..\..\..\..\..\Public\Documents\Embarcadero\Studio\17.0\Samples\Object Pascal\VCL\ActivityIndicator\ActivityIndicator.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\..\..\..\..\..\Public\Documents\Embarcadero\Studio\17.0\Samples\Object Pascal\VCL\SearchBox\SearchBox.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="transactions">
+        <MSBuild Projects="transactions.dproj"/>
+    </Target>
+    <Target Name="transactions:Clean">
+        <MSBuild Projects="transactions.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="transactions:Make">
+        <MSBuild Projects="transactions.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ActivityIndicator">
+        <MSBuild Projects="..\..\..\..\..\..\Public\Documents\Embarcadero\Studio\17.0\Samples\Object Pascal\VCL\ActivityIndicator\ActivityIndicator.dproj"/>
+    </Target>
+    <Target Name="ActivityIndicator:Clean">
+        <MSBuild Projects="..\..\..\..\..\..\Public\Documents\Embarcadero\Studio\17.0\Samples\Object Pascal\VCL\ActivityIndicator\ActivityIndicator.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ActivityIndicator:Make">
+        <MSBuild Projects="..\..\..\..\..\..\Public\Documents\Embarcadero\Studio\17.0\Samples\Object Pascal\VCL\ActivityIndicator\ActivityIndicator.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="SearchBox">
+        <MSBuild Projects="..\..\..\..\..\..\Public\Documents\Embarcadero\Studio\17.0\Samples\Object Pascal\VCL\SearchBox\SearchBox.dproj"/>
+    </Target>
+    <Target Name="SearchBox:Clean">
+        <MSBuild Projects="..\..\..\..\..\..\Public\Documents\Embarcadero\Studio\17.0\Samples\Object Pascal\VCL\SearchBox\SearchBox.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="SearchBox:Make">
+        <MSBuild Projects="..\..\..\..\..\..\Public\Documents\Embarcadero\Studio\17.0\Samples\Object Pascal\VCL\SearchBox\SearchBox.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="transactions;ActivityIndicator;SearchBox"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="transactions:Clean;ActivityIndicator:Clean;SearchBox:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="transactions:Make;ActivityIndicator:Make;SearchBox:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
